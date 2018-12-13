@@ -1,0 +1,33 @@
+# Driver path
+CHROME_DRIVER_LOCAL_PATH = ''
+
+# Login properties
+LOGIN_URL = ''
+LOGIN_USER = ''
+LOGIN_PASS = ''
+
+# Misc
+TIMEOUT = 5
+
+NBA = 'NBA'
+NFL = 'NFL'
+NHL = 'NHL'
+COLLEGE_BASKETBALL = 'College Basketball'
+COLLEGE_FOOTBALL = 'College Football'
+SPORT = {
+    NBA: {
+        'URL': ''
+    },
+    NFL: {
+        'URL': ''
+    },
+    NHL: {
+        'URL': ''
+    },
+    COLLEGE_BASKETBALL: {
+        'URL': ''
+    },
+    COLLEGE_FOOTBALL: {
+        'URL': ''
+    }
+}
