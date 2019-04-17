@@ -20,7 +20,7 @@ class OddsGenerator(object):
                 driver.login(config.SPORT[sport]['URL'])
                 # Initialize the Sport class
                 sport_class = Sport(sport, self.arguments.percentage)
-                sport_class.get_data(driver.driver)
+                sport_class.get_simulated_data(driver.driver)
 
         """
         if self.args.college_fball or self.args.all:

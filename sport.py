@@ -1,6 +1,8 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+from prettytable import PrettyTable
+import time
 
 import config
 
@@ -13,10 +15,12 @@ class Sport(object):
         self.sport = sport
         self.percentage = percentage
 
-    def get_data(self, driver):
+    def get_simulated_data(self, driver):
         game_data = get_games(driver)
 
         try:
+            game_data_table = PrettyTable(['Home Team / Away Team', 'Bet Type', 'Game Status', 'Pick', 'Simulated %'
+                                           'Public %', 'Grade'])
             for game, value in game_data.iteritems():
                 # Navigate to the game page and sleep for 3 seconds to make sure the page has time to load
                 driver.get(game)
@@ -34,10 +38,6 @@ class Sport(object):
                 section = picks.find_elements_by_class_name('pick-wrapper')
 
                 for data in section:
-                    # proj_score = data.find_element_by_class_name('proj-score')
-                    # proj_awayscore = proj_score.find_element_by_class_name('one').text
-                    # proj_homescore = proj_score.find_element_by_class_name('three').text
-
                     pick_value = data.find_element_by_class_name('pick-label').text.split('|')[0].strip()
                     value = data.find_element_by_class_name('value').text
                     light_pick = data.find_element_by_class_name('light-pick').text
@@ -63,11 +63,12 @@ class Sport(object):
                                 print pick_value, simulation_percentage, public_percentage, value, light_pick
 
                         elif title != MONEY_LINE:
-                            print hometeam, awayteam
-                            print title
-                            print status
-                            print pick_value, simulation_percentage, public_percentage, value, light_pick
-                            print "---------------"
+                            game_data_table.add_row(['{0} / {1}'.format(hometeam,awayteam), title, status, pick_value,
+                                                     simulation_percentage, public_percentage, value])
+
+            print game_data_table
+            print
+            print "Data pulled at {0}".format(str(time.strftime("%I:%M:%S %p")))
 
         except Exception as ex:
             print ex
@@ -76,6 +77,9 @@ class Sport(object):
 
         driver.close()
         driver.quit()
+
+    def get_expert_data(self, driver):
+        print
 
 
 def get_games(driver):
